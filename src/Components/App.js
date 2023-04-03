@@ -71,8 +71,3 @@ function App() {
 }
 
 export default App;
-
-// todo: Timeline Click and Drag
-// todo: Volume Bug
-// todo: slider
-// todo: transform: translate should be - 14rem
