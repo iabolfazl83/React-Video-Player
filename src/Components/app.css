@@ -1,0 +1,256 @@
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    padding: 0;
+    margin: 20px 0;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.video-player-container {
+    position: relative;
+    width: 95%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    margin-inline: auto;
+    align-items: center;
+}
+
+.video-player-container::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
+    width: 100%;
+    aspect-ratio: 6 / 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.250s;
+}
+
+video {
+    width: 100%;
+}
+
+.previous-next-controls {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    left: 20px;
+    right: 20px;
+}
+
+.previous-next-controls button {
+    color: #fff;
+    font-size: 25px;
+    background-color: rgba(90, 90, 90, 0.1);
+    padding: 15px;
+    border-radius: 2px;
+    transition: all 0.15s;
+}
+
+.previous-next-controls button:hover {
+    background-color: rgba(90, 90, 90, 0.5);
+}
+
+.video-controls {
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    left: calc(20px - 5px);
+    width: 90%;
+}
+
+.video-controls button {
+    font-size: 25px;
+    padding: 0 10px;
+    color: #fff;
+    opacity: 0.85;
+    transition: all 0.15s;
+}
+
+.video-controls button:hover {
+    opacity: 1;
+}
+
+.video-title {
+    position: absolute;
+    bottom: 10px;
+    right: calc(20px - 5px);
+    width: 30%;
+    padding-left: 10px;
+    color: #fff;
+    font-size: 20px;
+    overflow: auto;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    margin: 0 !important;
+}
+
+.volume-slider {
+    position: absolute;
+    bottom: 20px;
+    left: -7px;
+    height: 0;
+    width: 40px;
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+    transform: scale(0);
+    transition: height 0.3s;
+}
+
+.volume-slider:hover {
+    height: 90px;
+    transform: scale(1);
+}
+
+.volume-container:hover .volume-slider {
+    height: 90px;
+    transform: scale(1);
+}
+
+.timeline-container {
+    width: 40%;
+    margin-inline: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: height 0.150s;
+}
+
+.timeline-container:hover .timeline {
+    height: 5px;
+}
+
+.timeline {
+    position: relative;
+    background-color: rgba(100, 100, 100, .5);
+    height: 4px;
+    width: 100%;
+    transition: height 0.15s;
+}
+
+.timeline-before {
+    background-color: rgba(100, 100, 100, .5);
+    height: 100%;
+    width: 100%;
+    transition: height 0.15s;
+}
+
+.timeline-container:hover .thumb-indicator {
+    height: 300%;
+    top: -100%;
+}
+
+.timeline .thumb-indicator {
+    position: absolute;
+    height: 200%;
+    top: -50%;
+    left: 0;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: all 150ms ease-in-out;
+    aspect-ratio: 1 / 1;
+}
+
+.duration-container {
+    display: flex;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
+.duration-container span {
+    margin: 0 5px;
+}
+
+.video-controls-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.250s;
+}
+
+.video-player-container:hover .video-controls-container,
+.video-player-container:hover::before {
+    opacity: 1;
+}
+
+.gallery-slider {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 7rem);
+    margin-top: 20px;
+    margin-inline: auto;
+}
+
+.gallery-videos-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    max-width: 1000px;
+}
+
+.gallery-video {
+    width: 200px;
+    height: 240px;
+    margin: 0 5px;
+    padding: 10px;
+    flex-shrink: 0;
+}
+
+.video-name {
+    height: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.left-arrow {
+    font-size: 50px;
+    z-index: 100;
+    padding: 0 1.5rem 0 1.5rem;
+    margin-bottom: 7rem;
+}
+
+.right-arrow {
+    font-size: 50px;
+    z-index: 100;
+    padding: 0 1.5rem 0 1.5rem;
+    margin-bottom: 7rem;
+}
+
+.video-thumbnail video {
+    width: 100%;
+}
+
+video:not(#main-video) {
+    cursor: pointer;
+    transition: opacity 0.150s;
+}
+
+video:not(#main-video):hover {
+    opacity: 0.8;
+}
+
+.mainvid-default {
+    color: #fff;
+    height: 100%;
+    font-weight: bold;
+}
