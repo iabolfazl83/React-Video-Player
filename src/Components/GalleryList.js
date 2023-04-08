@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import Videos from "../assets/Videos";
 
 
@@ -30,11 +30,14 @@ function GallerySlider(props) {
                     setVideoState({
                         ...videoState,
                         isPlaying: false,
+                        isMuted: false,
                         videoTitle: item.title,
                         videoSrc: item.video_url,
                         videoDuration: formatDuration(videoInGallery),
                         videoCurrentTime: +0,
                         videoIndex: index,
+                        videoIndexObj: Videos[videoState.videoIndex],
+                        galleryListItem: videoInGallery,
                     })
                 }}
                        src={require(`../assets/video_files/${item.video_url}`)}>Your browser doesn't support

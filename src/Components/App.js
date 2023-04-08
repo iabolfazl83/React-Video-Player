@@ -3,11 +3,13 @@ import "./app.css";
 import VolumeAndPlayPauseControls from "./VolumeAndPlayPauseControls";
 import PreviousAndNextControls from "./PrevAndNextControls";
 import GalleryList from "./GalleryList";
+import galleryList from "./GalleryList";
 
 function App() {
     const mainVid = useRef(null)
     const videoPlayerContainerRef = useRef(null)
     const videoControlsContainerRef = useRef(null)
+    const galleryVideoContainerRef = useRef(null)
     const [video, setVideo] = useState({
         videoTitle: "",
         videoSrc: "",
@@ -17,9 +19,24 @@ function App() {
         videoDuration: +0,
         videoCurrentTime: +0,
         timeLine: "0",
-        videoIndex: 0,
         isScrubbing: false,
     })
+
+    function leftArrow() {
+        galleryVideoContainerRef.current.scrollBy({
+            top: 0,
+            left: -236,
+            behavior: 'smooth'
+        })
+    }
+
+    function rightArrow() {
+        galleryVideoContainerRef.current.scrollBy({
+            top: 0,
+            left: +236,
+            behavior: 'smooth'
+        })
+    }
 
     useEffect(() => {
         videoPlayerContainerRef.current.addEventListener("mouseover", () => {
@@ -30,7 +47,10 @@ function App() {
     return (
         <div className="app">
             <div className="video-player-wrapper">
-                <div className="video-player-container" ref={videoPlayerContainerRef}>
+                <div className="video-player-container" ref={videoPlayerContainerRef} style={{
+                    pointerEvents: video.videoSrc == "" ? "none" : "all"
+                }}>
+                    <div className="video-player-before"></div>
                     {
                         video.videoSrc === "" ?
                             <div className="mainvid-default">
@@ -46,7 +66,8 @@ function App() {
                     }
                     <div className="video-controls-container" ref={videoControlsContainerRef}>
                         {
-                            <PreviousAndNextControls></PreviousAndNextControls>
+                            <PreviousAndNextControls video={video} mainVideo={mainVid}
+                                                     setVideo={setVideo}></PreviousAndNextControls>
                         }
                         {
                             <VolumeAndPlayPauseControls video={video} mainVideo={mainVid}
@@ -55,15 +76,15 @@ function App() {
                     </div>
                 </div>
                 <div className="gallery-slider">
-                    <button className="left-arrow"><i className="fa-solid fa-chevron-left"></i></button>
-                    <div className="gallery-videos-container">
+                    <button className="left-arrow" onClick={leftArrow}><i className="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div className="gallery-videos-container" ref={galleryVideoContainerRef}>
                         {
                             <GalleryList video={video} setVideo={setVideo}></GalleryList>
                         }
                     </div>
-                    <button className="right-arrow"><i className="fa-solid fa-chevron-right"></i></button>
-                </div>
-                <div className="res-container">
+                    <button className="right-arrow" onClick={rightArrow}><i className="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -72,7 +93,7 @@ function App() {
 
 export default App;
 
-// todo: Timeline Click and Drag
+// todo: Timeline Drag
 // todo: Volume Bug
-// todo: slider
-// todo: transform: translate should be - 14rem
+// todo: slider (transform: translate should be - 14rem)
+// todo: prev&next btn limitation
