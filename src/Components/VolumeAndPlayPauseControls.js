@@ -8,10 +8,29 @@ function VolumeAndPlayPauseControls(props) {
     const volumeSliderRef = useRef(null);
     const volumeSliderIconRef = useRef(null);
     const currentTimeRef = useRef(null);
-    const timelineContainerRef = useRef(null);
     const timelineRef = useRef(null);
-    const thumbIndicatorRef = useRef(null);
-    let percent;
+
+    useEffect(() => {
+        volumeSliderRef.current.style.setProperty('--value', volumeSliderRef.current.value);
+        volumeSliderRef.current.style.setProperty('--min', "0");
+        volumeSliderRef.current.style.setProperty('--max', "1");
+
+        if (videoState.videoSrc !== "") {
+            timelineRef.current.setAttribute("max", mainVideo.current.duration)
+            timelineRef.current.style.setProperty('--timelinevalue', mainVideo.current.currentTime);
+        }
+
+        timelineRef.current.style.setProperty('--timelinemin', "0");
+        if (videoState.videoSrc !== "") {
+            if (isNaN(mainVideo.current.duration)) {
+                timelineRef.current.style.setProperty('--timelinemax', "1");
+                timelineRef.current.value = 0
+            } else {
+                timelineRef.current.style.setProperty('--timelinemax', `${mainVideo.current.duration}`);
+            }
+        }
+    })
+
 
     const togglePlay = () => {
         if (videoState.isPlaying) {
@@ -97,76 +116,20 @@ function VolumeAndPlayPauseControls(props) {
         setVideoState({
             ...videoState, videoCurrentTime: formatCurrentTime(),
         })
-        percent = (mainVideo.current.currentTime / mainVideo.current.duration) * 100;
-        timelineRef.current.style.width = `${percent}%`
-        thumbIndicatorRef.current.style.left = `calc(${percent}% - 2px)`
+        timelineRef.current.value = mainVideo.current.currentTime
     }
-
 
     if (mainVideo.current) {
         mainVideo.current.addEventListener("timeupdate", handleTimeUpdate)
     }
 
-
-    document.addEventListener("mouseup", e => {
-        if (videoState.isScrubbing) toggleScrubbing(e)
-    })
-    document.addEventListener("mousemove", e => {
-        if (videoState.isScrubbing) handleTimelineUpdate(e)
-    })
-
-
-    function toggleScrubbing(e) {
-        const rect = timelineContainerRef.current.getBoundingClientRect();
-        const rectPercent = Math.min(Math.max(0, e.clientX - rect.x), rect.width) / rect.width
-        setVideoState({
-            ...videoState,
-            isScrubbing: (e.buttons & 1) === 1,
-        })
-
-        if (videoState.isScrubbing) {
-            setVideoState({
-                ...videoState,
-                isPlaying: false,
-            })
-        } else {
-            mainVideo.current.currentTime = rectPercent * mainVideo.current.duration;
-            setVideoState({
-                ...videoState,
-                videoCurrentTime: mainVideo.current.currentTime,
-            })
-
-            if (!videoState.isPlaying) {
-                setVideoState({
-                    ...videoState,
-                    isPlaying: true,
-                })
-            }
-        }
-        handleTimelineUpdate(e)
-    }
-
-
-    function handleTimelineUpdate(e) {
-        const rect = timelineContainerRef.current.getBoundingClientRect();
-        const rectPercent = Math.min(Math.max(0, e.clientX - rect.x), rect.width) / rect.width
-
-        if (videoState.isScrubbing) {
-            e.preventDefault()
-            timelineRef.current.style.width = `${rectPercent}%`
-        }
-    }
-
-    useEffect(() => {
-        timelineRef.current.style.width = "0";
-        thumbIndicatorRef.current.style.left = `0`
-    }, [videoState.videoTitle]);
-
-
     return (<>
         <div className="video-controls">
             <div className="volume-container">
-                <input className="volume-slider" type="range" ref={volumeSliderRef} onInput={setVideoVolume.bind(this)}
+                <input className="volume-slider slider-progress" type="range" ref={volumeSliderRef} onInput={e => {
+                    setVideoVolume.bind(e)
+                    e.target.style.setProperty('--value', e.target.value)
+                }}
                        orient="vertical"
                        min="0" max="1"
                        step="any"/>
@@ -183,24 +146,17 @@ function VolumeAndPlayPauseControls(props) {
 
             </div>
 
-            <div className="timeline-container" ref={timelineContainerRef} onMouseMove={(e) => {
-                handleTimelineUpdate(e)
-            }}
-                 onMouseDown={(e) => {
-                     toggleScrubbing(e)
-                 }}>
+            <div className="timeline-container">
 
-                <div className="timeline">
-                    <div ref={timelineRef} className="timeline-before" style={{
-                        position: 'absolute',
-                        content: '',
-                        top: '0',
-                        bottom: '0',
-                        width: `0`,
-                        backgroundColor: '#fff',
-                    }}/>
-                    <div className="thumb-indicator" ref={thumbIndicatorRef}></div>
-                </div>
+                <input className="timeline-input slider-progress" type="range" min={0} ref={timelineRef}
+                       onInput={() => {
+                           timelineRef.current.style.setProperty('--timelinevalue', mainVideo.current.currentTime);
+                           mainVideo.current.currentTime = timelineRef.current.value
+                           setVideoState({
+                               ...videoState,
+                               videoCurrentTime: formatCurrentTime(mainVideo.current.currentTime),
+                           })
+                       }}/>
             </div>
 
             <div className="duration-container">

@@ -3,7 +3,6 @@ import "./app.css";
 import VolumeAndPlayPauseControls from "./VolumeAndPlayPauseControls";
 import PreviousAndNextControls from "./PrevAndNextControls";
 import GalleryList from "./GalleryList";
-import galleryList from "./GalleryList";
 
 function App() {
     const mainVid = useRef(null)
@@ -18,8 +17,6 @@ function App() {
         volume: 1,
         videoDuration: +0,
         videoCurrentTime: +0,
-        timeLine: "0",
-        isScrubbing: false,
     })
 
     function leftArrow() {

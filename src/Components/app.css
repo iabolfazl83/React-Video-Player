@@ -99,32 +99,85 @@ video {
     margin: 0 !important;
 }
 
-.volume-slider {
-    position: absolute;
-    bottom: 20px;
-    left: -7px;
-    height: 0;
-    width: 40px;
-    writing-mode: bt-lr;
-    -webkit-appearance: slider-vertical;
-    transform: scale(0);
-    transition: height 0.3s;
+.fa-solid {
+    width: 31px;
 }
 
-.volume-slider:hover {
-    height: 90px;
-    transform: scale(1);
+.volume-container {
+    position: relative;
+}
+
+.volume-slider {
+    position: absolute;
+    bottom: 50px;
+    left: -27px;
+    width: 150%;
+    height: 0;
+    background-color: transparent;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transform: scale(0) rotate(270deg);
+    transition: height .3s;
 }
 
 .volume-container:hover .volume-slider {
-    height: 90px;
-    transform: scale(1);
+    height: 100%;
+    transform: scale(1) rotate(270deg);
+}
+
+/*progress support*/
+input[type=range].volume-slider.slider-progress {
+    --max: 0;
+    --min: 0;
+    --value: 0;
+    --range: calc(var(--max) - var(--min));
+    --ratio: calc((var(--value) - var(--min)) / var(--range));
+    --sx: calc(0.5 * 17px + var(--ratio) * (100% - 17px));
+}
+
+input[type=range].volume-slider:focus {
+    outline: none;
+}
+
+/*webkit*/
+input[type=range].volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 20px;
+    background: #fff;
+    border: none;
+    box-shadow: 0 0 2px black;
+    margin-top: calc(8px * 0.5 - 17px * 0.5);
+}
+
+input[type=range].volume-slider::-webkit-slider-runnable-track {
+    height: 6px;
+    border: none;
+    border-radius: 0;
+    background: rgba(100, 100, 100, .4);
+    box-shadow: none;
+}
+
+input[type=range].volume-slider::-webkit-slider-thumb:hover {
+    background: #d9d9d9;
+}
+
+input[type=range].volume-slider:hover::-webkit-slider-runnable-track {
+    background: rgba(100, 100, 100, .5);
+}
+
+input[type=range].volume-slider.slider-progress::-webkit-slider-runnable-track {
+    background: linear-gradient(#fff, #fff) 0/var(--sx) 100% no-repeat, rgba(100, 100, 100, .4);
+}
+
+input[type=range].volume-slider.slider-progress:hover::-webkit-slider-runnable-track {
+    background: linear-gradient(#f2f2f2, #f2f2f2) 0/var(--sx) 100% no-repeat, rgba(100, 100, 100, .5);
 }
 
 .timeline-container {
     width: 40%;
     margin-inline: 15px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     transition: height 0.150s;
@@ -165,6 +218,68 @@ video {
     aspect-ratio: 1 / 1;
 }
 
+/*________________________________________________________________*/
+
+input[type=range].timeline-input {
+    -webkit-appearance: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 5px;
+    background-color: rgba(100, 100, 100, .7);
+    opacity: 0.7;
+    transition: all 0.200s;
+}
+
+.timeline-input:hover {
+    opacity: 1;
+}
+
+input[type=range].timeline-input.slider-progress {
+    --timelinemax: 0;
+    --timelinemin: 0;
+    --timelinevalue: 1;
+    --range: calc(var(--timelinemax) - var(--timelinemin));
+    --ratio: calc((var(--timelinevalue) - var(--timelinemin)) / var(--range));
+    --sx: calc(0.5 * 17px + var(--ratio) * (100% - 17px));
+}
+
+input[type=range].timeline-input:focus {
+    outline: none;
+}
+
+input[type=range].timeline-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 20px;
+    background: #fff;
+    border: none;
+    box-shadow: 0 0 2px black;
+    margin-top: calc(8px * 0.5 - 17px * 0.5);
+}
+
+input[type=range].timeline-input::-webkit-slider-runnable-track {
+    height: 5px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+input[type=range].timeline-input::-webkit-slider-thumb:hover {
+    background: #d9d9d9;
+}
+
+input[type=range].timeline-input.slider-progress::-webkit-slider-runnable-track {
+    background: linear-gradient(#fff, #fff) 0/var(--sx) 100% no-repeat, rgba(100, 100, 100, .4);
+}
+
+input[type=range].timeline-input.slider-progress:hover::-webkit-slider-runnable-track {
+    background: linear-gradient(#f2f2f2, #f2f2f2) 0/var(--sx) 100% no-repeat, rgba(100, 100, 100, .5);
+}
+
 .duration-container {
     display: flex;
     color: #fff;
@@ -202,16 +317,21 @@ video {
 .gallery-videos-container {
     display: flex;
     flex-grow: 1;
-    overflow: hidden;
+    overflow: auto;
     max-width: 1000px;
 }
 
+.gallery-videos-container::-webkit-scrollbar {
+    display: none;
+}
+
 .gallery-video {
-    width: 200px;
+    width: 206px;
     height: 240px;
     margin: 0 5px;
     padding: 10px;
     flex-shrink: 0;
+    transition: all 0.200s;
 }
 
 .video-name {
