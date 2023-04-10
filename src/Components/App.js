@@ -9,6 +9,8 @@ function App() {
     const videoPlayerContainerRef = useRef(null)
     const videoControlsContainerRef = useRef(null)
     const galleryVideoContainerRef = useRef(null)
+    const leftArrowRef = useRef(null)
+    const rightArrowRef = useRef(null)
     const [video, setVideo] = useState({
         videoTitle: "",
         videoSrc: "",
@@ -21,24 +23,41 @@ function App() {
 
     function leftArrow() {
         galleryVideoContainerRef.current.scrollBy({
-            top: 0,
             left: -236,
             behavior: 'smooth'
         })
+
+        if (galleryVideoContainerRef.current.scrollLeft === 0 || galleryVideoContainerRef.current.scrollLeft === 236) {
+            leftArrowRef.current.setAttribute("disabled", "")
+        } else {
+            leftArrowRef.current.removeAttribute("disabled", "");
+            rightArrowRef.current.removeAttribute("disabled", "");
+        }
+
+        console.log(galleryVideoContainerRef.current.scrollLeft)
     }
 
     function rightArrow() {
         galleryVideoContainerRef.current.scrollBy({
-            top: 0,
             left: +236,
             behavior: 'smooth'
         })
+
+        if (galleryVideoContainerRef.current.scrollLeft === 2116 || galleryVideoContainerRef.current.scrollLeft === 1880) {
+            rightArrowRef.current.setAttribute("disabled", "")
+        } else {
+            rightArrowRef.current.removeAttribute("disabled", "");
+            leftArrowRef.current.removeAttribute("disabled", "");
+        }
+
+        console.log(galleryVideoContainerRef.current.scrollLeft)
     }
 
     useEffect(() => {
         videoPlayerContainerRef.current.addEventListener("mouseover", () => {
             !video.videoTitle ? videoControlsContainerRef.current.style.opacity = 0 : videoControlsContainerRef.current.style.opacity = 1
         })
+        galleryVideoContainerRef.current.scrollLeft === 0 ? leftArrowRef.current.setAttribute("disabled", "") : leftArrowRef.current.removeAttribute("disabled", "");
     }, [video])
 
     return (
@@ -73,14 +92,16 @@ function App() {
                     </div>
                 </div>
                 <div className="gallery-slider">
-                    <button className="left-arrow" onClick={leftArrow}><i className="fa-solid fa-chevron-left"></i>
+                    <button className="left-arrow" onClick={leftArrow} ref={leftArrowRef}><i
+                        className="fa-solid fa-chevron-left"></i>
                     </button>
                     <div className="gallery-videos-container" ref={galleryVideoContainerRef}>
                         {
                             <GalleryList video={video} setVideo={setVideo}></GalleryList>
                         }
                     </div>
-                    <button className="right-arrow" onClick={rightArrow}><i className="fa-solid fa-chevron-right"></i>
+                    <button className="right-arrow" onClick={rightArrow} ref={rightArrowRef}><i
+                        className="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
             </div>
@@ -90,7 +111,6 @@ function App() {
 
 export default App;
 
-// todo: Timeline Drag
+
 // todo: Volume Bug
-// todo: slider (transform: translate should be - 14rem)
-// todo: prev&next btn limitation
+// todo: prev&next btn
