@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/React-Video-Player/static/css/main.49115037.css",
-    "main.js": "/React-Video-Player/static/js/main.7dc1b0af.js",
+    "main.js": "/React-Video-Player/static/js/main.49af8bf6.js",
     "static/js/787.2b3e4843.chunk.js": "/React-Video-Player/static/js/787.2b3e4843.chunk.js",
     "static/media/Introducing iPhone 14 Pro - Apple.mp4": "/React-Video-Player/static/media/Introducing iPhone 14 Pro - Apple.f549fb2b64d3b0797e03.mp4",
     "static/media/Testing Action mode - Shot on iPhone 14 Pro - Apple.mp4": "/React-Video-Player/static/media/Testing Action mode - Shot on iPhone 14 Pro - Apple.060e85906bad3f82c0f4.mp4",
@@ -13,13 +13,14 @@
     "static/media/Introducing Apple Watch Series 8 - Apple.mp4": "/React-Video-Player/static/media/Introducing Apple Watch Series 8 - Apple.62f8083564c41d557c9f.mp4",
     "static/media/iPhone 14 & iPhone 14 Plus - Hello Yellow - Apple.mp4": "/React-Video-Player/static/media/iPhone 14 & iPhone 14 Plus - Hello Yellow - Apple.0feb2d08cd80518ca97e.mp4",
     "static/media/AirPods Pro - Rebuilt from the sound up - Apple.mp4": "/React-Video-Player/static/media/AirPods Pro - Rebuilt from the sound up - Apple.cdf37eb944650b8023b0.mp4",
+    "static/media/HomePod mini, now in color - Apple.mp4": "/React-Video-Player/static/media/HomePod mini, now in color - Apple.19c8242dc7ed6a07e0a6.mp4",
     "index.html": "/React-Video-Player/index.html",
     "main.49115037.css.map": "/React-Video-Player/static/css/main.49115037.css.map",
-    "main.7dc1b0af.js.map": "/React-Video-Player/static/js/main.7dc1b0af.js.map",
+    "main.49af8bf6.js.map": "/React-Video-Player/static/js/main.49af8bf6.js.map",
     "787.2b3e4843.chunk.js.map": "/React-Video-Player/static/js/787.2b3e4843.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49115037.css",
-    "static/js/main.7dc1b0af.js"
+    "static/js/main.49af8bf6.js"
   ]
 }
