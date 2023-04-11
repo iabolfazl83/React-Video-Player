@@ -106,7 +106,3 @@ function App() {
 }
 
 export default App;
-
-
-// todo: Volume Bug
-// todo: prev&next btn
