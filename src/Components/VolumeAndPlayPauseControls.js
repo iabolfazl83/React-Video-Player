@@ -44,20 +44,30 @@ function VolumeAndPlayPauseControls(props) {
     };
 
     function toggleMute() {
+        mainVideo.current.volume === 0 ? mainVideo.current.volume = 1 : mainVideo.current.volume = 0;
         setVideoState({
             ...videoState, isMuted: !videoState.isMuted
         })
         volumeSliderRef.current.value > 0 ? volumeSliderRef.current.value = 0 : volumeSliderRef.current.value = 1;
-        mainVideo.current.muted = !videoState.isMuted;
     }
 
     function setVideoVolume(e) {
-        mainVideo.current.volume = +e.target.value;
-        videoState.volume = mainVideo.current.volume;
-        !videoState.volume > 0 ? setVideoState({...videoState, isMuted: false}) : setVideoState({
-            ...videoState, isMuted: true
+        mainVideo.current.volume = e.target.value;
+        setVideoState({
+            ...videoState,
+            volume: mainVideo.current.volume,
         })
-        videoState.volume === 0 ? setVideoState({...videoState, isMuted: true}) : setVideoState({
+        if (mainVideo.current.volume > 0) {
+            if (videoState.isMuted) {
+                setVideoState({
+                    ...videoState,
+                    isMuted: false,
+                    volume: mainVideo.current.volume
+                })
+            }
+        }
+
+        mainVideo.current.volume === 0 ? setVideoState({...videoState, isMuted: true}) : setVideoState({
             ...videoState, isMuted: false
         })
         // mainVideo.current.volume = videoState.volume;
@@ -127,7 +137,7 @@ function VolumeAndPlayPauseControls(props) {
         <div className="video-controls">
             <div className="volume-container">
                 <input className="volume-slider slider-progress" type="range" ref={volumeSliderRef} onInput={e => {
-                    setVideoVolume.bind(e)
+                    setVideoVolume(e)
                     e.target.style.setProperty('--value', e.target.value)
                 }}
                        orient="vertical"

@@ -33,8 +33,6 @@ function App() {
             leftArrowRef.current.removeAttribute("disabled", "");
             rightArrowRef.current.removeAttribute("disabled", "");
         }
-
-        console.log(galleryVideoContainerRef.current.scrollLeft)
     }
 
     function rightArrow() {
@@ -49,8 +47,6 @@ function App() {
             rightArrowRef.current.removeAttribute("disabled", "");
             leftArrowRef.current.removeAttribute("disabled", "");
         }
-
-        console.log(galleryVideoContainerRef.current.scrollLeft)
     }
 
     useEffect(() => {
