@@ -70,23 +70,6 @@ function VolumeAndPlayPauseControls(props) {
         mainVideo.current.volume === 0 ? setVideoState({...videoState, isMuted: true}) : setVideoState({
             ...videoState, isMuted: false
         })
-        // mainVideo.current.volume = videoState.volume;
-        // setVideoState({
-        //     ...videoState,
-        //     volume: e.target.value
-        // })
-        // videoState.isMuted = e.target.value === 0
-        // e.target.value == 0
-        //     ?
-        //     setVideoState({
-        //         ...videoState,
-        //         isMuted: true
-        //     })
-        //     :
-        //     setVideoState({
-        //         ...videoState,
-        //         isMuted: false
-        //     })
     }
 
     const leadingZeroFormatter = new Intl.NumberFormat(undefined, {

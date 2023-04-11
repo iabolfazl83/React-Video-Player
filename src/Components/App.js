@@ -27,7 +27,7 @@ function App() {
             behavior: 'smooth'
         })
 
-        if (galleryVideoContainerRef.current.scrollLeft === 0 || galleryVideoContainerRef.current.scrollLeft === 236) {
+        if (galleryVideoContainerRef.current.scrollLeft === 0 || galleryVideoContainerRef.current.scrollLeft <= 236) {
             leftArrowRef.current.setAttribute("disabled", "")
         } else {
             leftArrowRef.current.removeAttribute("disabled", "");
@@ -41,7 +41,7 @@ function App() {
             behavior: 'smooth'
         })
 
-        if (galleryVideoContainerRef.current.scrollLeft === 2116 || galleryVideoContainerRef.current.scrollLeft === 1880) {
+        if (galleryVideoContainerRef.current.scrollLeft === 2116 || galleryVideoContainerRef.current.scrollLeft >= 1644) {
             rightArrowRef.current.setAttribute("disabled", "")
         } else {
             rightArrowRef.current.removeAttribute("disabled", "");
