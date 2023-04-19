@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./app.css";
-import VolumeAndPlayPauseControls from "./VolumeAndPlayPauseControls";
+import PlayerControls from "./PlayerControls";
 import PreviousAndNextControls from "./PrevAndNextControls";
 import GalleryList from "./GalleryList";
 
@@ -82,8 +82,8 @@ function App() {
                                                      setVideo={setVideo}></PreviousAndNextControls>
                         }
                         {
-                            <VolumeAndPlayPauseControls video={video} mainVideo={mainVid}
-                                                        setVideo={setVideo}></VolumeAndPlayPauseControls>
+                            <PlayerControls video={video} mainVideo={mainVid}
+                                            setVideo={setVideo}></PlayerControls>
                         }
                     </div>
                 </div>

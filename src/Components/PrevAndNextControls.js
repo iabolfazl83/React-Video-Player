@@ -1,5 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import "./app.css";
+import formatTime from "./formatTime";
+
 
 function PrevAndNext(props) {
     const mainVideo = props.mainVideo;
@@ -17,20 +19,6 @@ function PrevAndNext(props) {
         }
     })
 
-    let leadingZeroFormatter = new Intl.NumberFormat(undefined, {
-        minimumIntegerDigits: 2,
-    })
-
-    function formatDuration() {
-        const seconds = Math.floor(mainVideo.current.length % 60)
-        const minutes = Math.floor(mainVideo.current.length / 60) % 60
-        const hours = Math.floor(mainVideo.current.length / 3600)
-        if (hours === 0) {
-            return `${minutes}:${leadingZeroFormatter.format(seconds)}`
-        } else {
-            return `${hours}:${leadingZeroFormatter.format(minutes)}:${leadingZeroFormatter.format(seconds)}`
-        }
-    }
 
     function prevVideo() {
 
@@ -42,11 +30,11 @@ function PrevAndNext(props) {
 
 
     return (<div className="previous-next-controls">
-            <button className="previous-btn" onClick={prevVideo} ref={prevBtn}><i className="fa-solid fa-backward"></i>
-            </button>
-            <button className="next-btn" onClick={nextVideo} ref={nextBtn}><i className="fa-solid fa-forward"></i>
-            </button>
-        </div>)
+        <button className="previous-btn" onClick={prevVideo} ref={prevBtn}><i className="fa-solid fa-backward"></i>
+        </button>
+        <button className="next-btn" onClick={nextVideo} ref={nextBtn}><i className="fa-solid fa-forward"></i>
+        </button>
+    </div>)
 }
 
 export default PrevAndNext;

@@ -356,16 +356,16 @@ input[type=range].timeline-input.slider-progress:hover::-webkit-slider-runnable-
     margin-bottom: 7rem;
 }
 
-.video-thumbnail video {
+.video-thumbnail video, .video-thumbnail img {
     width: 100%;
 }
 
-video:not(#main-video) {
+video:not(#main-video),  .video-thumbnail img{
     cursor: pointer;
     transition: opacity 0.150s;
 }
 
-video:not(#main-video):hover {
+video:not(#main-video):hover,  .video-thumbnail img:hover{
     opacity: 0.8;
 }
 
