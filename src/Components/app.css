@@ -356,16 +356,24 @@ input[type=range].timeline-input.slider-progress:hover::-webkit-slider-runnable-
     margin-bottom: 7rem;
 }
 
-.video-thumbnail video, .video-thumbnail img {
-    width: 100%;
+.video-thumbnail {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-video:not(#main-video),  .video-thumbnail img{
+.video-thumbnail video, .video-thumbnail img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+video:not(#main-video), .video-thumbnail img {
     cursor: pointer;
     transition: opacity 0.150s;
 }
 
-video:not(#main-video):hover,  .video-thumbnail img:hover{
+video:not(#main-video):hover, .video-thumbnail img:hover {
     opacity: 0.8;
 }
 
@@ -373,4 +381,22 @@ video:not(#main-video):hover,  .video-thumbnail img:hover{
     color: #fff;
     height: 100%;
     font-weight: bold;
+}
+
+.is-active {
+    border: 3px solid #324b54;
+}
+
+.play-icon {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    color: #000;
+    z-index: 999;
+    pointer-events: none;
 }

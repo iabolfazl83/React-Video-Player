@@ -30,6 +30,13 @@ function PlayerControls(props) {
                 timelineRef.current.style.setProperty('--timelinemax', `${mainVideo.current.duration}`);
             }
         }
+        if (videoState.videoSrc !== "") {
+            if (!videoState.isPlaying) {
+                mainVideo.current.pause();
+            } else {
+                mainVideo.current.play();
+            }
+        }
     })
 
 

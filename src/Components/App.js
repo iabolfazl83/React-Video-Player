@@ -19,6 +19,7 @@ function App() {
         volume: 1,
         videoDuration: +0,
         videoCurrentTime: +0,
+        videoIndex: null,
     })
 
     function leftArrow() {
@@ -93,7 +94,7 @@ function App() {
                     </button>
                     <div className="gallery-videos-container" ref={galleryVideoContainerRef}>
                         {
-                            <GalleryList video={video} setVideo={setVideo}></GalleryList>
+                            <GalleryList video={video} setVideo={setVideo} mainVideo={mainVid}></GalleryList>
                         }
                     </div>
                     <button className="right-arrow" onClick={rightArrow} ref={rightArrowRef}><i
@@ -108,5 +109,4 @@ function App() {
 export default App;
 
 
-// todo: Volume Bug
 // todo: prev&next btn
