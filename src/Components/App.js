@@ -3,9 +3,11 @@ import "./app.css";
 import PlayerControls from "./PlayerControls";
 import PreviousAndNextControls from "./PrevAndNextControls";
 import GalleryList from "./GalleryList";
+import formatTime from "./formatTime";
+import Videos from "../assets/Videos";
 
 function App() {
-    const mainVid = useRef(null)
+    const mainVideoRef = useRef(null)
     const videoPlayerContainerRef = useRef(null)
     const videoControlsContainerRef = useRef(null)
     const galleryVideoContainerRef = useRef(null)
@@ -19,8 +21,28 @@ function App() {
         volume: 1,
         videoDuration: +0,
         videoCurrentTime: +0,
-        videoIndex: null,
+        activeIndex: null,
     })
+
+    function onThumbnailClick(item, index) {
+        document.querySelector(".volume-slider").value = 1;
+        if (mainVideoRef.current !== null) {
+            mainVideoRef.current.volume = 1;
+        }
+
+        setVideo({
+            ...video,
+            isPlaying: false,
+            isMuted: false,
+            volume: 1,
+            videoTitle: item.title,
+            videoSrc: item.videoUrl,
+            videoDuration: formatTime(item.videoTime),
+            videoCurrentTime: +0,
+            activeIndex: index,
+            videoIndexObj: Videos[video.activeIndex],
+        })
+    }
 
     function leftArrow() {
         galleryVideoContainerRef.current.scrollBy({
@@ -72,18 +94,18 @@ function App() {
                                 </p>
                             </div>
                             :
-                            <video id="main-video" ref={mainVid}
+                            <video id="main-video" ref={mainVideoRef}
                                    src={require(`../assets/video_files/${video.videoSrc === "" ? null : video.videoSrc}`)}>
                                 your browser does not support video.
                             </video>
                     }
                     <div className="video-controls-container" ref={videoControlsContainerRef}>
                         {
-                            <PreviousAndNextControls video={video} mainVideo={mainVid}
+                            <PreviousAndNextControls video={video} mainVideo={mainVideoRef}
                                                      setVideo={setVideo}></PreviousAndNextControls>
                         }
                         {
-                            <PlayerControls video={video} mainVideo={mainVid}
+                            <PlayerControls video={video} mainVideo={mainVideoRef}
                                             setVideo={setVideo}></PlayerControls>
                         }
                     </div>
@@ -94,7 +116,8 @@ function App() {
                     </button>
                     <div className="gallery-videos-container" ref={galleryVideoContainerRef}>
                         {
-                            <GalleryList video={video} setVideo={setVideo} mainVideo={mainVid}></GalleryList>
+                            <GalleryList activeIndex={video.activeIndex} onThumbnailClick={onThumbnailClick}
+                                         list={Videos}></GalleryList>
                         }
                     </div>
                     <button className="right-arrow" onClick={rightArrow} ref={rightArrowRef}><i
