@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./app.css";
 import PlayerControls from "./PlayerControls";
-import PreviousAndNextControls from "./PrevAndNextControls";
+import PreviousAndNextControls from "./SkipControls";
 import GalleryList from "./GalleryList";
 import formatTime from "./formatTime";
 import Videos from "../assets/Videos";
@@ -44,34 +44,6 @@ function App() {
         })
     }
 
-    function leftArrow() {
-        galleryVideoContainerRef.current.scrollBy({
-            left: -236,
-            behavior: 'smooth'
-        })
-
-        if (galleryVideoContainerRef.current.scrollLeft === 0 || galleryVideoContainerRef.current.scrollLeft <= 236) {
-            leftArrowRef.current.setAttribute("disabled", "")
-        } else {
-            leftArrowRef.current.removeAttribute("disabled", "");
-            rightArrowRef.current.removeAttribute("disabled", "");
-        }
-    }
-
-    function rightArrow() {
-        galleryVideoContainerRef.current.scrollBy({
-            left: +236,
-            behavior: 'smooth'
-        })
-
-        if (galleryVideoContainerRef.current.scrollLeft === 2116 || galleryVideoContainerRef.current.scrollLeft >= 1644) {
-            rightArrowRef.current.setAttribute("disabled", "")
-        } else {
-            rightArrowRef.current.removeAttribute("disabled", "");
-            leftArrowRef.current.removeAttribute("disabled", "");
-        }
-    }
-
     useEffect(() => {
         videoPlayerContainerRef.current.addEventListener("mouseover", () => {
             !video.videoTitle ? videoControlsContainerRef.current.style.opacity = 0 : videoControlsContainerRef.current.style.opacity = 1
@@ -111,18 +83,11 @@ function App() {
                     </div>
                 </div>
                 <div className="gallery-slider">
-                    <button className="left-arrow" onClick={leftArrow} ref={leftArrowRef}><i
-                        className="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <div className="gallery-videos-container" ref={galleryVideoContainerRef}>
-                        {
-                            <GalleryList activeIndex={video.activeIndex} onThumbnailClick={onThumbnailClick}
-                                         list={Videos}></GalleryList>
-                        }
-                    </div>
-                    <button className="right-arrow" onClick={rightArrow} ref={rightArrowRef}><i
-                        className="fa-solid fa-chevron-right"></i>
-                    </button>
+                    {
+                        <GalleryList activeIndex={video.activeIndex} onThumbnailClick={onThumbnailClick}
+                                     list={Videos} galleryVideoContainerRef={galleryVideoContainerRef}
+                                     leftArrowRef={leftArrowRef} rightArrowRef={rightArrowRef}></GalleryList>
+                    }
                 </div>
             </div>
         </div>
