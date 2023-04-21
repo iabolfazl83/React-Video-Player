@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/React-Video-Player/static/css/main.47c6e753.css",
-    "main.js": "/React-Video-Player/static/js/main.32c8e3b8.js",
+    "main.css": "/React-Video-Player/static/css/main.b764f01a.css",
+    "main.js": "/React-Video-Player/static/js/main.be5c813f.js",
     "static/js/787.2b3e4843.chunk.js": "/React-Video-Player/static/js/787.2b3e4843.chunk.js",
     "static/media/Introducing iPhone 14 Pro - Apple.mp4": "/React-Video-Player/static/media/Introducing iPhone 14 Pro - Apple.f549fb2b64d3b0797e03.mp4",
     "static/media/Testing Action mode - Shot on iPhone 14 Pro - Apple.mp4": "/React-Video-Player/static/media/Testing Action mode - Shot on iPhone 14 Pro - Apple.060e85906bad3f82c0f4.mp4",
@@ -24,12 +24,12 @@
     "static/media/Introducing the all-new HomePod - Apple.webp": "/React-Video-Player/static/media/Introducing the all-new HomePod - Apple.b711e3639f5984b6f056.webp",
     "static/media/AirPods Pro - Rebuilt from the sound up - Apple.webp": "/React-Video-Player/static/media/AirPods Pro - Rebuilt from the sound up - Apple.2603d72bf1f95f7b494f.webp",
     "index.html": "/React-Video-Player/index.html",
-    "main.47c6e753.css.map": "/React-Video-Player/static/css/main.47c6e753.css.map",
-    "main.32c8e3b8.js.map": "/React-Video-Player/static/js/main.32c8e3b8.js.map",
+    "main.b764f01a.css.map": "/React-Video-Player/static/css/main.b764f01a.css.map",
+    "main.be5c813f.js.map": "/React-Video-Player/static/js/main.be5c813f.js.map",
     "787.2b3e4843.chunk.js.map": "/React-Video-Player/static/js/787.2b3e4843.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.47c6e753.css",
-    "static/js/main.32c8e3b8.js"
+    "static/css/main.b764f01a.css",
+    "static/js/main.be5c813f.js"
   ]
 }
