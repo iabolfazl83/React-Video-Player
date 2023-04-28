@@ -11,7 +11,7 @@ function GallerySlider(props) {
             behavior: 'smooth'
         })
 
-        // if less than 2 scrolls are remaining
+        // if less than 2 scrolls are remaining skip the half part
         if (galleryVideoContainerRef.current.scrollLeft < 472) {
             galleryVideoContainerRef.current.scrollBy({
                 left: -472,
@@ -33,7 +33,7 @@ function GallerySlider(props) {
             behavior: 'smooth'
         })
 
-        // if less than 2 scrolls are remaining
+        // if less than 2 scrolls are remaining skip the half part
 
         if (galleryVideoContainerRef.current.scrollLeft >= 1180) {
             galleryVideoContainerRef.current.scrollBy({
