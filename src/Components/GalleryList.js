@@ -1,88 +1,54 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
 
 
 function GallerySlider(props) {
-    const {activeIndex, onThumbnailClick, list, galleryVideoContainerRef, leftArrowRef, rightArrowRef} = props;
-    const videoElRef = useRef(null)
+    const {activeIndex, onThumbnailClick, list} = props;
+    const galleryVideoRef = useRef(null);
+    const galleryVideoContainerRef = useRef(null);
+    const leftArrowRef = useRef(null);
+    const rightArrowRef = useRef(null);
+    let maxScrollLeft;
+    let videoWidth;
 
-    function leftArrow() {
-        galleryVideoContainerRef.current.scrollBy({
-            left: -236,
-            behavior: 'smooth'
-        })
+    useEffect(() => {
+        galleryVideoContainerRef.current.scrollLeft === 0 ? leftArrowRef.current.setAttribute("disabled", "") : leftArrowRef.current.removeAttribute("disabled", "");
+    })
 
-        // if less than 2 scrolls are remaining
-        if (galleryVideoContainerRef.current.scrollLeft < 472) {
-            galleryVideoContainerRef.current.scrollBy({
-                left: -472,
-                behavior: 'smooth'
-            })
-            leftArrowRef.current.setAttribute("disabled", "")
-        }
-
-        if (galleryVideoContainerRef.current.scrollLeft <= 236) {
-            leftArrowRef.current.setAttribute("disabled", "")
-        } else {
-            rightArrowRef.current.removeAttribute("disabled", "");
-        }
+    function calcScroll() {
+        // if videoGallery has padding
+        let videoGalleryPadding = Number(window.getComputedStyle(galleryVideoRef.current, null).getPropertyValue("padding").slice(0, -2))
+        videoWidth = galleryVideoRef.current.clientWidth + videoGalleryPadding;
+        maxScrollLeft = galleryVideoContainerRef.current.scrollWidth - galleryVideoContainerRef.current.clientWidth
     }
 
-    function rightArrow() {
+    function moveScroll(scrollProperty) {
         galleryVideoContainerRef.current.scrollBy({
-            left: +236,
+            left: scrollProperty,
             behavior: 'smooth'
         })
+        checkArrows()
+    }
 
-        // if less than 2 scrolls are remaining
-
-        if (galleryVideoContainerRef.current.scrollLeft >= 1180) {
-            galleryVideoContainerRef.current.scrollBy({
-                left: +472,
-                behavior: 'smooth'
-            })
-
-            rightArrowRef.current.setAttribute("disabled", "")
-        }
-
-        if (galleryVideoContainerRef.current.scrollLeft >= 1282) {
-            rightArrowRef.current.setAttribute("disabled", "")
-        } else {
-            leftArrowRef.current.removeAttribute("disabled", "");
-        }
-
-        // if slider with was less than 472px (2 video per page)
-
-        if (galleryVideoContainerRef.current.clientWidth <= 472) {
-            if (galleryVideoContainerRef.current.scrollLeft >= 1652) {
-                rightArrowRef.current.setAttribute("disabled", "")
-            } else {
-                rightArrowRef.current.removeAttribute("disabled", "");
-                leftArrowRef.current.removeAttribute("disabled", "");
-            }
-        }
-
-        // if slider with was less than 236px (1 video per page)
-
-        if (galleryVideoContainerRef.current.clientWidth <= 236) {
-            if (galleryVideoContainerRef.current.scrollLeft >= 1880) {
-                rightArrowRef.current.setAttribute("disabled", "")
-            } else {
-                rightArrowRef.current.removeAttribute("disabled", "");
-                leftArrowRef.current.removeAttribute("disabled", "");
-            }
-        }
+    function checkArrows() {
+        galleryVideoContainerRef.current.scrollLeft === 0 ? leftArrowRef.current.setAttribute("disabled", "") : leftArrowRef.current.removeAttribute("disabled", "")
+        galleryVideoContainerRef.current.scrollLeft === maxScrollLeft ? rightArrowRef.current.setAttribute("disabled", "") : rightArrowRef.current.removeAttribute("disabled", "")
     }
 
     return (
         <>
-            <button className="left-arrow" onClick={leftArrow} ref={leftArrowRef}><i
+            <button className="left-arrow" ref={leftArrowRef} onClick={() => {
+                calcScroll()
+                moveScroll(videoWidth * -1)
+            }}><i
                 className="fa-solid fa-chevron-left"></i>
             </button>
-            <div className="gallery-videos-container" ref={galleryVideoContainerRef}>
+            <div className="gallery-videos-container" ref={galleryVideoContainerRef} onScroll={() => {
+                checkArrows()
+            }}>
                 {
                     list.map((item, index) => {
                         return (
-                            <div className="gallery-video" ref={videoElRef}>
+                            <div className="gallery-video" ref={galleryVideoRef}>
                                 <div className="video-thumbnail">
                                 <span
                                     className={`play-icon fa ${activeIndex === index ? "fa-pause" : "fa-play"}`}></span>
@@ -99,7 +65,10 @@ function GallerySlider(props) {
                     })
                 }
             </div>
-            <button className="right-arrow" onClick={rightArrow} ref={rightArrowRef}><i
+            <button className="right-arrow" ref={rightArrowRef} onClick={() => {
+                calcScroll()
+                moveScroll(videoWidth)
+            }}><i
                 className="fa-solid fa-chevron-right"></i>
             </button>
         </>
