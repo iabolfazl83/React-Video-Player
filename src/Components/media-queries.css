@@ -1,0 +1,60 @@
+@media screen and (min-width: 575.98px) {
+    .video-controls button, .previous-next-controls button, .video-title {
+        font-size: 20px;
+    }
+
+    .right-arrow, .left-arrow {
+        font-size: 50px;
+    }
+
+    .video-controls button {
+        padding: 0 5px;
+    }
+
+    .previous-next-controls button {
+        padding: 10px;
+    }
+
+    .gallery-video {
+        width: 41%;
+    }
+
+    .volume-slider {
+        bottom: 38px;
+        left: -22px;
+    }
+}
+
+@media screen and (min-width: 767.98px) {
+    .previous-next-controls button {
+        font-size: 25px;
+    }
+
+
+}
+
+@media screen and (min-width: 991.98px) {
+    .video-controls {
+        width: calc(100% - 30%);
+    }
+
+    .video-title {
+        top: auto;
+        left: auto;
+        bottom: 10px !important;
+        right: calc(20px - 5px) !important;
+        width: 30%;
+    }
+
+    .gallery-video {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 1199.98px) {
+
+}
+
+@media screen and (min-width: 1399.98px) {
+
+}
