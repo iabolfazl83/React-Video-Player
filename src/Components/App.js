@@ -1,7 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import "./app.css";
+import "./media-queries.css"
 import PlayerControls from "./PlayerControls";
-import PreviousAndNextControls from "./SkipControls";
+import PreviousVideo from "./PreviousVideo";
+import NextVideoBtn from "./NextVideoBtn";
 import GalleryList from "./GalleryList";
 import formatTime from "./formatTime";
 import Videos from "../assets/Videos";
@@ -10,9 +12,6 @@ function App() {
     const mainVideoRef = useRef(null)
     const videoPlayerContainerRef = useRef(null)
     const videoControlsContainerRef = useRef(null)
-    const galleryVideoContainerRef = useRef(null)
-    const leftArrowRef = useRef(null)
-    const rightArrowRef = useRef(null)
     const [video, setVideo] = useState({
         videoTitle: "",
         videoSrc: "",
@@ -40,16 +39,8 @@ function App() {
             videoDuration: formatTime(item.videoTime),
             videoCurrentTime: +0,
             activeIndex: index,
-            videoIndexObj: Videos[video.activeIndex],
         })
     }
-
-    useEffect(() => {
-        videoPlayerContainerRef.current.addEventListener("mouseover", () => {
-            !video.videoTitle ? videoControlsContainerRef.current.style.opacity = 0 : videoControlsContainerRef.current.style.opacity = 1
-        })
-        galleryVideoContainerRef.current.scrollLeft === 0 ? leftArrowRef.current.setAttribute("disabled", "") : leftArrowRef.current.removeAttribute("disabled", "");
-    }, [video])
 
     return (
         <div className="app">
@@ -72,10 +63,16 @@ function App() {
                             </video>
                     }
                     <div className="video-controls-container" ref={videoControlsContainerRef}>
-                        {
-                            <PreviousAndNextControls video={video} mainVideo={mainVideoRef}
-                                                     setVideo={setVideo}></PreviousAndNextControls>
-                        }
+                        <div className="previous-next-controls">
+                            {
+                                <>
+                                    <PreviousVideo list={Videos} video={video} setVideo={setVideo}
+                                                   mainVideoRef={mainVideoRef}></PreviousVideo>
+                                    <NextVideoBtn list={Videos} video={video} setVideo={setVideo}
+                                                  mainVideoRef={mainVideoRef}></NextVideoBtn>
+                                </>
+                            }
+                        </div>
                         {
                             <PlayerControls video={video} mainVideo={mainVideoRef}
                                             setVideo={setVideo}></PlayerControls>
@@ -85,8 +82,7 @@ function App() {
                 <div className="gallery-slider">
                     {
                         <GalleryList activeIndex={video.activeIndex} onThumbnailClick={onThumbnailClick}
-                                     list={Videos} galleryVideoContainerRef={galleryVideoContainerRef}
-                                     leftArrowRef={leftArrowRef} rightArrowRef={rightArrowRef}></GalleryList>
+                                     list={Videos}></GalleryList>
                     }
                 </div>
             </div>
@@ -95,6 +91,3 @@ function App() {
 }
 
 export default App;
-
-
-// todo: prev&next btn
