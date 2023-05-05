@@ -54,9 +54,9 @@ video {
 
 .previous-next-controls button {
     color: #fff;
-    font-size: 25px;
+    font-size: 18px;
     background-color: rgba(90, 90, 90, 0.1);
-    padding: 15px;
+    padding: 5px;
     border-radius: 2px;
     transition: all 0.15s;
 }
@@ -70,12 +70,11 @@ video {
     position: absolute;
     bottom: 10px;
     left: calc(20px - 5px);
-    width: 90%;
+    width: 94%;
 }
 
 .video-controls button {
-    font-size: 25px;
-    padding: 0 10px;
+    font-size: 17px;
     color: #fff;
     opacity: 0.85;
     transition: all 0.15s;
@@ -87,12 +86,13 @@ video {
 
 .video-title {
     position: absolute;
-    bottom: 10px;
-    right: calc(20px - 5px);
-    width: 30%;
-    padding-left: 10px;
+    top: 10px;
+    left: calc(20px - 5px);
+    /* width: 30%; */
+    /* padding-left: 10px; */
     color: #fff;
-    font-size: 20px;
+    text-shadow: 0 0 5px #2c2c2c;
+    font-size: 17px;
     overflow: auto;
     box-sizing: border-box;
     text-overflow: ellipsis;
@@ -109,8 +109,8 @@ video {
 
 .volume-slider {
     position: absolute;
-    bottom: 50px;
-    left: -27px;
+    bottom: 30px;
+    left: -18px;
     width: 150%;
     height: 0;
     background-color: transparent;
@@ -176,7 +176,8 @@ input[type=range].volume-slider.slider-progress:hover::-webkit-slider-runnable-t
 }
 
 .timeline-container {
-    width: 40%;
+    width: calc(80% - 135px);
+    /* width: 80%; */
     margin-inline: 15px;
     display: flex;
     align-items: center;
@@ -217,8 +218,6 @@ input[type=range].volume-slider.slider-progress:hover::-webkit-slider-runnable-t
     transition: all 150ms ease-in-out;
     aspect-ratio: 1 / 1;
 }
-
-/*________________________________________________________________*/
 
 input[type=range].timeline-input {
     -webkit-appearance: none;
@@ -318,7 +317,7 @@ input[type=range].timeline-input.slider-progress:hover::-webkit-slider-runnable-
 .gallery-videos-container {
     display: flex;
     flex-grow: 1;
-    overflow: auto;
+    overflow: hidden;
     max-width: 1000px;
 }
 
@@ -327,12 +326,19 @@ input[type=range].timeline-input.slider-progress:hover::-webkit-slider-runnable-
 }
 
 .gallery-video {
-    width: 206px;
-    height: 240px;
+    width: 90%;
     margin: 0 5px;
     padding: 10px;
     flex-shrink: 0;
     transition: all 0.200s;
+}
+
+.gallery-video:last-child {
+    margin-right: 0 !important;
+}
+
+.gallery-video:first-child {
+    margin-left: 0 !important;
 }
 
 .video-name {
@@ -341,13 +347,13 @@ input[type=range].timeline-input.slider-progress:hover::-webkit-slider-runnable-
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+    margin: 5px 0;
 }
 
 .right-arrow, .left-arrow {
-    font-size: 50px;
+    font-size: 35px;
     z-index: 100;
     padding: 0 24px 0 24px;
-    margin-bottom: 112px;
 }
 
 .video-thumbnail {
