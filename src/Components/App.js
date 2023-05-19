@@ -1,9 +1,8 @@
-import React, {useRef, useState} from "react";
-import "./app.css";
-import "./media-queries.css"
+import React, {useEffect, useRef, useState} from "react";
+import "./Styles/app.css";
+import "./Styles/media-queries.css"
 import PlayerControls from "./PlayerControls";
-import PreviousVideo from "./PreviousVideo";
-import NextVideoBtn from "./NextVideoBtn";
+import PlayerBtn from "./PlayerBtn";
 import GalleryList from "./GalleryList";
 import formatTime from "./formatTime";
 import Videos from "../assets/Videos";
@@ -21,7 +20,17 @@ function App() {
         videoDuration: +0,
         videoCurrentTime: +0,
         activeIndex: null,
+        isFirst: true,
+        isLast: false,
     })
+
+    useEffect(() => {
+        setVideo({
+            ...video,
+            isLast: video.activeIndex + 1 === Videos.length,
+            isFirst: video.activeIndex === 0,
+        })
+    }, [video.activeIndex]);
 
     function onThumbnailClick(item, index) {
         document.querySelector(".volume-slider").value = 1;
@@ -39,6 +48,51 @@ function App() {
             videoDuration: formatTime(item.videoTime),
             videoCurrentTime: +0,
             activeIndex: index,
+        })
+    }
+
+    function previousVideo() {
+        const prevVideoIndex = Videos[video.activeIndex - 1];
+
+
+        document.querySelector(".volume-slider").value = 1;
+        if (mainVideoRef.current !== null) {
+            mainVideoRef.current.volume = 1;
+        }
+
+        setVideo({
+            ...video,
+            videoTitle: prevVideoIndex.title,
+            videoSrc: prevVideoIndex.videoUrl,
+            isPlaying: false,
+            isMuted: false,
+            volume: 1,
+            videoDuration: +0,
+            videoCurrentTime: +0,
+            activeIndex: video.activeIndex - 1,
+        })
+    }
+
+    function nextVideo() {
+        const nextVideoIndex = Videos[video.activeIndex + 1];
+
+
+        document.querySelector(".volume-slider").value = 1;
+        if (mainVideoRef.current !== null) {
+            mainVideoRef.current.volume = 1;
+        }
+
+        setVideo({
+            ...video,
+            videoTitle: nextVideoIndex.title,
+            videoSrc: nextVideoIndex.videoUrl,
+            isPlaying: false,
+            isMuted: false,
+            volume: 1,
+            videoDuration: +0,
+            videoCurrentTime: +0,
+            activeIndex: video.activeIndex + 1,
+
         })
     }
 
@@ -66,10 +120,13 @@ function App() {
                         <div className="previous-next-controls">
                             {
                                 <>
-                                    <PreviousVideo list={Videos} video={video} setVideo={setVideo}
-                                                   mainVideoRef={mainVideoRef}></PreviousVideo>
-                                    <NextVideoBtn list={Videos} video={video} setVideo={setVideo}
-                                                  mainVideoRef={mainVideoRef}></NextVideoBtn>
+                                    <PlayerBtn disabled={video.isFirst} onClick={previousVideo}>
+                                        <i className="fa-solid fa-backward"></i>
+                                    </PlayerBtn>
+
+                                    <PlayerBtn disabled={video.isLast} onClick={nextVideo}>
+                                        <i className="fa-solid fa-forward"></i>
+                                    </PlayerBtn>
                                 </>
                             }
                         </div>
