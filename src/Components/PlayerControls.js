@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from "react";
-import formatTime from "./formatTime";
+import formatTime from "../Helpers/formatTime";
 
 function PlayerControls(props) {
     const {mainVideo, video, setVideo,} = props;
