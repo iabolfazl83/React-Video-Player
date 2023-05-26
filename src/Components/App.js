@@ -4,7 +4,6 @@ import "./Styles/media-queries.css"
 import PlayerControls from "./PlayerControls";
 import PlayerBtn from "./PlayerBtn";
 import GalleryList from "./GalleryList";
-import formatTime from "./formatTime";
 import Videos from "../assets/Videos";
 
 function App() {
@@ -32,12 +31,8 @@ function App() {
         })
     }, [video.activeIndex]);
 
-    function onThumbnailClick(item, index) {
-        document.querySelector(".volume-slider").value = 1;
-        if (mainVideoRef.current !== null) {
-            mainVideoRef.current.volume = 1;
-        }
-
+    function setVideoState(item) {
+        const index = Videos.findIndex(x => x.id === item.id)
         setVideo({
             ...video,
             isPlaying: false,
@@ -45,55 +40,35 @@ function App() {
             volume: 1,
             videoTitle: item.title,
             videoSrc: item.videoUrl,
-            videoDuration: formatTime(item.videoTime),
             videoCurrentTime: +0,
             activeIndex: index,
         })
     }
 
-    function previousVideo() {
-        const prevVideoIndex = Videos[video.activeIndex - 1];
-
-
+    function onThumbnailClick(item) {
         document.querySelector(".volume-slider").value = 1;
         if (mainVideoRef.current !== null) {
             mainVideoRef.current.volume = 1;
         }
-
-        setVideo({
-            ...video,
-            videoTitle: prevVideoIndex.title,
-            videoSrc: prevVideoIndex.videoUrl,
-            isPlaying: false,
-            isMuted: false,
-            volume: 1,
-            videoDuration: +0,
-            videoCurrentTime: +0,
-            activeIndex: video.activeIndex - 1,
-        })
+        setVideoState(item)
     }
 
-    function nextVideo() {
-        const nextVideoIndex = Videos[video.activeIndex + 1];
-
-
+    function goToPreviousVideo() {
+        const prevVideo = Videos[video.activeIndex - 1];
         document.querySelector(".volume-slider").value = 1;
         if (mainVideoRef.current !== null) {
             mainVideoRef.current.volume = 1;
         }
+        setVideoState({...prevVideo, activeIndex: video.activeIndex - 1})
+    }
 
-        setVideo({
-            ...video,
-            videoTitle: nextVideoIndex.title,
-            videoSrc: nextVideoIndex.videoUrl,
-            isPlaying: false,
-            isMuted: false,
-            volume: 1,
-            videoDuration: +0,
-            videoCurrentTime: +0,
-            activeIndex: video.activeIndex + 1,
-
-        })
+    function goToNextVideo() {
+        const nextVideo = Videos[video.activeIndex + 1];
+        document.querySelector(".volume-slider").value = 1;
+        if (mainVideoRef.current !== null) {
+            mainVideoRef.current.volume = 1;
+        }
+        setVideoState({...nextVideo, activeIndex: video.activeIndex + 1})
     }
 
     return (
@@ -120,11 +95,11 @@ function App() {
                         <div className="previous-next-controls">
                             {
                                 <>
-                                    <PlayerBtn disabled={video.isFirst} onClick={previousVideo}>
+                                    <PlayerBtn disabled={video.isFirst} onClick={goToPreviousVideo}>
                                         <i className="fa-solid fa-backward"></i>
                                     </PlayerBtn>
 
-                                    <PlayerBtn disabled={video.isLast} onClick={nextVideo}>
+                                    <PlayerBtn disabled={video.isLast} onClick={goToNextVideo}>
                                         <i className="fa-solid fa-forward"></i>
                                     </PlayerBtn>
                                 </>
